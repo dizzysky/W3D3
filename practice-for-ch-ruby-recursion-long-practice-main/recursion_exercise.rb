@@ -162,13 +162,52 @@ p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
 p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
 p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
 
+def msort(arr)
+    return arr if arr.length == 1
+
+    mid = arr.length/2
+
+    left = arr[0...mid]
+    right = arr[mid..-1]
+
+    leftsort = msort(left)
+    rightsort = msort(right)
+
+    return merge(leftsort, rightsort)
+end
+
+def merge(left, right)
+    result = []
+    while !left.empty? && !right.empty?
+        if left[0] <= right[0]
+            result << left.shift
+        else
+            result << right.shift
+        end
+    end
+
+    if left.empty?
+        result += right
+    else
+        result += left
+    end
+    result
+end
 
 
 
+p msort([2,8,3,9,23,6,45,6,8,2])
+p msort([-2,8,3,9,23,0,6,45,6,8,2])
+# p msort([2,8,3,9,23,6,45,6,8,2])
+# p msort([2,8,3,9,23,6,45,6,8,2])
 
+def subsets(arr)
+    return [[]] if arr.empty?
+    subs = subsets(arr[0...-1])
+    subs.concat(subs.map {|sub| sub + [arr.last]})
+end
 
-
-
+p subsets([1,2,3])
 
 
 
